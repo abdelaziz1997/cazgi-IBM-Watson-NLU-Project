@@ -32,6 +32,9 @@ class App extends React.Component {
     }
   }
 
+  getSentimentLabel = (Sentiment) => {
+
+  }
   sendForSentimentAnalysis = () => {
     this.setState({sentiment:true});
     let url = ".";
@@ -44,13 +47,15 @@ class App extends React.Component {
     fetch(url).then((response)=>{
         response.text().then((data)=>{
         this.setState({sentimentOutput:data});
-        let output = data;
-        if(data === "positive") {
+        let output = '';
+        let JSONdata = JSON.parse(data)
+        console.log(JSONdata["label"]);
+        if(JSONdata["label"] === "positive") {
           output = <div style={{color:"green",fontSize:20}}>{data}</div>
-        } else if (data === "negative"){
+        } else if (JSONdata["label"] === "negative"){
           output = <div style={{color:"red",fontSize:20}}>{data}</div>
         } else {
-          output = <div style={{color:"orange",fontSize:20}}>{data}</div>
+          output = <div style={{color:"yellow",fontSize:20}}>{data}</div>
         }
         this.setState({sentimentOutput:output});
       })});
@@ -73,6 +78,7 @@ class App extends React.Component {
   
 
   render() {
+    document.title = "Sentiment Analyzer";
     return (  
       <div className="App">
       <button className="btn btn-info" onClick={this.renderTextArea}>Text</button>
