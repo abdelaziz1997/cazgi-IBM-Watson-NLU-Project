@@ -33,13 +33,8 @@ app.get("/url/emotion", (req,res) => {
     const analyzeParams = {
         'url': req.query.url,
         'features': {
-            'entities': {
-                'emotion': true,
-                'limit': 3
-            },
-            'keywords': {
-                'emotion': true, 
-                'limit': 3
+            'emotion': {
+                'limit': 1
             }
         }
     };
@@ -47,8 +42,8 @@ app.get("/url/emotion", (req,res) => {
     naturalLanguageUnderstanding.analyze(analyzeParams) 
         .then(emotionResults => { 
             console.log(emotionResults); 
-            console.log(JSON.stringify(emotionResults.result.entities[0].emotion,null,2));
-            return res.send(emotionResults.result.entities[0].emotion,null,2); 
+            console.log(JSON.stringify(emotionResults.result.emotion.document.emotion,null,2));
+            return res.send(emotionResults.result.emotion.document.emotion,null,2); 
         }) 
         .catch(err => { 
             return res.send("Error : Could not Analyze !"+err); 
@@ -59,13 +54,8 @@ app.get("/url/sentiment", (req,res) => {
     const analyzeParams = {
         'url': req.query.url,
         'features': {
-            'entities': {
-                'sentiment': true,
-                'limit': 3
-            },
-            'keywords': {
-                'sentiment': true,
-                'limit': 3
+            'sentiment': {
+                'limit': 1
             }
         }
     };
@@ -73,8 +63,8 @@ app.get("/url/sentiment", (req,res) => {
     naturalLanguageUnderstanding.analyze(analyzeParams) 
         .then(sentimentResults => { 
             console.log(sentimentResults); 
-            console.log(JSON.stringify(sentimentResults.result.keywords[0].sentiment,null,2));
-            return res.send(sentimentResults.result.keywords[0].sentiment,null,2); 
+            console.log(JSON.stringify(sentimentResults.result.sentiment.document.label,null,2));
+            return res.send(sentimentResults.result.sentiment.document.label,null,2); 
         }) 
         .catch(err => { 
             return res.send("Error : Could not Analyze !"+err); 
@@ -85,21 +75,16 @@ app.get("/text/emotion", (req,res) => {
     const analyzeParams = {
         'text': req.query.text,
         'features': {
-            'entities': {
-                'emotion': true,
-                'limit': 3
-            },
-            'keywords': {
-                'emotion': true, 
-                'limit': 3
+            'emotion': {
+                'limit': 1
             }
         }
     };
     const naturalLanguageUnderstanding = getNLUInstance();
     naturalLanguageUnderstanding.analyze(analyzeParams) 
         .then(emotionResults => { 
-            console.log(JSON.stringify(emotionResults.result.entities[0].emotion,null,2));
-            return res.send(emotionResults.result.entities[0].emotion,null,2); 
+            console.log(JSON.stringify(emotionResults.result.emotion.document.emotion,null,2));
+            return res.send(emotionResults.result.emotion.document.emotion,null,2); 
         }) 
         .catch(err => { 
             return res.send("Error : Could not Analyze !"+err);
@@ -110,13 +95,8 @@ app.get("/text/sentiment", (req,res) => {
     const analyzeParams = {
         'text': req.query.text,
         'features': {
-            'entities': {
-                'sentiment': true,
-                'limit': 3
-            },
-            'keywords': {
-                'sentiment': true, 
-                'limit': 3
+            'sentiment': {
+                'limit': 1
             }
         }
     };
@@ -124,8 +104,8 @@ app.get("/text/sentiment", (req,res) => {
     naturalLanguageUnderstanding.analyze(analyzeParams) 
         .then(sentimentResults => { 
             console.log(sentimentResults); 
-            console.log(JSON.stringify(sentimentResults.result.keywords[0].sentiment,null,2));
-            return res.send(sentimentResults.result.keywords[0].sentiment,null,2); 
+            console.log(JSON.stringify(sentimentResults.result.sentiment.document.label,null,2));
+            return res.send(sentimentResults.result.sentiment.document.label,null,2); 
         }) 
         .catch(err => { 
             return res.send("Error : Could not Analyze !"+err);

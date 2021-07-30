@@ -48,11 +48,9 @@ class App extends React.Component {
         response.text().then((data)=>{
         this.setState({sentimentOutput:data});
         let output = '';
-        let JSONdata = JSON.parse(data)
-        console.log(JSONdata["label"]);
-        if(JSONdata["label"] === "positive") {
+        if(data === "positive") {
           output = <div style={{color:"green",fontSize:20}}>{data}</div>
-        } else if (JSONdata["label"] === "negative"){
+        } else if (data === "negative"){
           output = <div style={{color:"red",fontSize:20}}>{data}</div>
         } else {
           output = <div style={{color:"yellow",fontSize:20}}>{data}</div>
